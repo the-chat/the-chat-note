@@ -1,4 +1,6 @@
 export type Note = {
   id: string
-  text: string
+  title?: string
+  text?: string
+  photoSrc?: string
 }

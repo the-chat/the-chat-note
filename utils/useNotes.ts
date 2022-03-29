@@ -39,7 +39,7 @@ const vertPhotoTextTitle = {
   text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi tempus iaculis urna id volutpat lacus laoreet non curabitur. In ante metus dictum at tempor commodo. Sit amet aliquam id diam maecenas ultricies mi eget. Consectetur adipiscing elit pellentesque habitant morbi.",
 }
 
-const placeholder = [
+const placeholder: Note[] = [
   onlyText,
   title,
   photoAndText,
@@ -48,12 +48,12 @@ const placeholder = [
   vertPhotoTextTitle,
 ]
 
-const useNotes = (id?: string): Note[] => {
+function useNotes(): Note[]
+function useNotes(id: string): Note
+function useNotes(id?: string) {
   const [{ notes }] = useUser()
-  console.log(notes)
 
   if (id) return placeholder.filter((x) => x.id == id)[0]
-
   return placeholder
 }
 

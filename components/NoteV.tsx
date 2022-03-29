@@ -3,10 +3,10 @@ import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardMedia from "@mui/material/CardMedia"
 import Typography from "@mui/material/Typography"
-import { Grid,IconButton, Button, CardActionArea, CardActions } from "@mui/material"
+import { Grid, IconButton, CardActionArea, CardActions } from "@mui/material"
 import { Note } from "types"
 import { Link } from "@the-chat/ui-kit"
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from "@mui/icons-material/MoreVert"
 
 // todo: img next
 const NoteV = ({ id, title, text, photoSrc }: Note) => (
@@ -25,11 +25,11 @@ const NoteV = ({ id, title, text, photoSrc }: Note) => (
           </CardContent>
         </CardActionArea>
       </Link>
-       <CardActions>
-       <IconButton>
-       <MoreVertIcon/>
-       </IconButton>
-    </CardActions> 
+      <CardActions>
+        <IconButton>
+          <MoreVertIcon />
+        </IconButton>
+      </CardActions>
     </Card>
   </Grid>
 )

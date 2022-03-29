@@ -10,27 +10,27 @@ const NewNote = () => {
   const [{ uid }] = useUser()
   const { update } = getDb(db)
 
-if(uid){
-  const handleNew = () => {
-    const newBlankNote: Note = {
-      text: "",
-      id: v4(),
+  if (uid) {
+    const handleNew = () => {
+      const newBlankNote: Note = {
+        text: "",
+        id: v4(),
+      }
+
+      // todo: catch
+      update("users/" + uid + "/notes", {
+        [newBlankNote.id]: newBlankNote,
+      }).then(() => replace("/note/" + newBlankNote.id))
     }
 
-    // todo: catch
-    update("users/" + uid + "/notes", {
-      [newBlankNote.id]: newBlankNote,
-    }).then(() => replace("/note/" + newBlankNote.id))
+    return (
+      <>
+        <button onClick={handleNew}>NEW</button>
+      </>
+    )
   }
 
-  return (
-    <>
-      <button onClick={handleNew}>NEW</button>
-    </>
-  )
-}
-
-return null
+  return null
 }
 
 export default NewNote

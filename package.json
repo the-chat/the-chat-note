@@ -9,10 +9,10 @@
   "dependencies": {
     "@mui/material": "^5.5.1",
     "@the-chat/config": "^1.0.5",
-    "@the-chat/db": "^1.0.8",
+    "@the-chat/db": "^1.0.9",
     "@the-chat/types": "^1.0.7",
-    "@the-chat/ui-kit": "^1.3.9",
-    "@the-chat/use-user": "^1.1.7",
+    "@the-chat/ui-kit": "^1.4.0",
+    "@the-chat/use-user": "^1.1.8",
     "@the-chat/utils": "^1.1.5",
     "firebase-admin": "^10.0.2",
     "next": "^12.1.0",

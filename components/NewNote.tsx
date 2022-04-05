@@ -4,6 +4,8 @@ import { useRouter } from "next/router"
 import { Note } from "types"
 import { db } from "utils/firebase"
 import { v4 } from "uuid"
+import FabFixed from "./FabFixed"
+import { Add } from "@mui/icons-material"
 
 const NewNote = () => {
   const { replace } = useRouter()
@@ -24,9 +26,9 @@ const NewNote = () => {
     }
 
     return (
-      <>
-        <button onClick={handleNew}>NEW</button>
-      </>
+      <FabFixed color="primary" onClick={handleNew} in={true}>
+        <Add />
+      </FabFixed>
     )
   }
 

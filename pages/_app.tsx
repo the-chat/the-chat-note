@@ -1,26 +1,27 @@
 import { Interface, useSidebarButtonsDefaultSortFn } from "@the-chat/ui-kit"
-import { useRouter } from "next/router"
 import makeStyles from "@mui/styles/makeStyles"
-import { useUser } from "@the-chat/use-user"
 import { appWithTranslation } from "next-i18next"
 import { FC, useState } from "react"
 import { AppProps } from "next/app"
 import { auth, db } from "utils/firebase"
-import { INFO, SSO } from "@the-chat/config"
+import manifest from "public/manifest.json"
+import { dependsOnToolbar } from "@the-chat/utils"
+import { Theme } from "@mui/material"
+import Head from "next/head"
 
-const useStyles = makeStyles({
-  root: { display: "flex", flexDirection: "column", minHeight: "100vh" },
-})
+const useStyles = makeStyles<Theme>((theme) => ({
+  root: {
+    ...dependsOnToolbar((toolbarHeight) => ({
+      padding: toolbarHeight / parseInt(theme.spacing()),
+    })),
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
+  },
+}))
 
-const PageLayout: FC = ({ children }) => {
+const Root: FC = ({ children }) => {
   const { root } = useStyles()
-  const { push, locale, pathname } = useRouter()
-  const [dbData, user, , { dbError }] = useUser()
-
-  if (!dbError && user) {
-    // learn: is pathname a currect property
-    if (dbData.lang != locale) push(pathname, pathname, { locale: dbData.lang })
-  }
 
   return <div className={root}>{children}</div>
 }
@@ -31,17 +32,13 @@ const App = ({ Component, pageProps }: AppProps) => (
       auth,
       sidebarOpen: useState<boolean>(false),
       signOutArgs: [auth, "SIGN OUT", "ERROR"],
-      newUser: true,
+      newUser: false,
       containerMaxWidth: "xs",
       useSidebarButtons: () => useSidebarButtonsDefaultSortFn({}),
-      InfoConfig: {
-        ...INFO,
-        HOST: INFO.DEFAULT_INFO_HOST,
-      },
-      SSOConfig: {
-        ...SSO,
-        HOST: SSO.DEFAULT_SSO_HOST,
-      },
+    }}
+    appHead={{
+      name: manifest.name,
+      Head,
     }}
     userProviderParams={{
       db,
@@ -56,9 +53,9 @@ const App = ({ Component, pageProps }: AppProps) => (
       }),
     }}
   >
-    <PageLayout>
+    <Root>
       <Component {...pageProps} />
-    </PageLayout>
+    </Root>
   </Interface>
 )
 

@@ -10,7 +10,7 @@
     "@mui/material": "^5.5.1",
     "@the-chat/config": "^1.0.6",
     "@the-chat/db": "^1.0.9",
-    "@the-chat/ui-kit": "^1.4.8",
+    "@the-chat/ui-kit": "^1.4.9",
     "@the-chat/use-user": "^2.0.4",
     "@the-chat/utils": "^1.1.7",
     "firebase-admin": "^10.0.2",

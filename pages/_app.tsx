@@ -8,6 +8,7 @@ import manifest from "public/manifest.json"
 import { dependsOnToolbar } from "@the-chat/utils"
 import { Theme } from "@mui/material"
 import Head from "next/head"
+import { useDocData } from "utils/db"
 
 const useStyles = makeStyles<Theme>((theme) => ({
   root: {
@@ -40,9 +41,9 @@ const App = ({ Component, pageProps }: AppProps) => (
       name: manifest.name,
       Head,
     }}
-    userProviderParams={{
-      db,
+    userProviderProps={{
       path: "users/",
+      useUserData: useDocData,
       useDefaultValueForDbDataInProviderWrapper: () => ({
         displayName: "",
         email: "",

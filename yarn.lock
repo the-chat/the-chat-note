@@ -881,10 +881,10 @@
   resolved "https://registry.yarnpkg.com/@the-chat/types/-/types-1.0.9.tgz#39e0eb23bdd97f2d7ca6cab6e534cf4d03a1dc20"
   integrity sha512-YyyD/7LVSce72Jh2J1IZ6kQj2nALFqZ2mKq5lLRf64hm+cdxa5oAv26RfEThAT+8xCU3S7XZpRNzbn5hHU0LBQ==
 
-"@the-chat/ui-kit@^1.4.8":
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/@the-chat/ui-kit/-/ui-kit-1.4.8.tgz#cca0c2d53acc8c556685e19f6640989d8eec6f26"
-  integrity sha512-A//8/xU9uUFdaB97ly1z7+Z16uMrLoIargs1+FsPa6WzUXyJ05P88ZQ+EQgnSCoEwJmFQU9vwdi9qOQ3YI9IwA==
+"@the-chat/ui-kit@^1.4.9":
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/@the-chat/ui-kit/-/ui-kit-1.4.9.tgz#d8f7aef60d21c2f96f7135410c54475e389aaea5"
+  integrity sha512-PQERAJxZAfbNI0jrON+/1NSHtPe8f3TgAJ2lwABag5WymGFIccEnJot8osg1q46GLbcGQ4WwaKlZ9p829KElHg==
   dependencies:
     "@emotion/react" "^11.8.1"
     "@emotion/styled" "^11.8.1"

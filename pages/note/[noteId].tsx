@@ -119,6 +119,7 @@ const Marks = ({ marksOpenState, marks }: MarksProps) => (
   </>
 )
 
+// TODO: IF YOU WILL DELETE LOCATION, YOU CAN SAVE CHANGES, BECOUSE OF TEXT WILL DISSAPEAR, BUT NOT PROPERTY!
 const Note = () => {
   const noteId = useNoteId()
   const note = useNotes(noteId)

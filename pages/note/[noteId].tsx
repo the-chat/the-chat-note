@@ -10,14 +10,18 @@ import {
   Typography,
   TypographyProps,
   IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
 } from "@mui/material"
 import { useState } from "react"
 import objectEquals from "object-equals"
 import { Save } from "@mui/icons-material"
 import { InputFile } from "@the-chat/ui-kit"
-import { OnInputEvent } from "@the-chat/types"
+import { OnInputEvent, SetState } from "@the-chat/types"
 import { update } from "utils/db"
-import { Note } from "types"
+import { Marks, Note } from "types"
 import { useUser } from "@the-chat/use-user"
 import FabFixed, { FabFixedProps } from "components/FabFixed"
 import { marksConfig } from "config"
@@ -69,6 +73,42 @@ const Photo = ({ photoSrc }) =>
     </InputFile>
   ) : null
 
+const LocationDialog = ({ open }: { open: boolean }) => (
+  <Dialog open={open}>
+    <DialogTitle>{marksConfig.location.text}</DialogTitle>
+    <DialogContent>
+      <TextField />
+    </DialogContent>
+  </Dialog>
+)
+
+const TagDialog = ({ open }: { open: boolean }) => (
+  <Dialog open={open}>
+    <DialogTitle>{marksConfig.tag.text}</DialogTitle>
+  </Dialog>
+)
+
+type MarksProps = {
+  marksOpenState: Record<Marks, SetState<boolean>>
+  marks: Note["marks"]
+}
+
+const Marks = ({ marksOpenState, marks }: MarksProps) => (
+  <>
+    {Object.entries(marks).map(([mark, value]) => {
+      const Icon = marksConfig[mark].DefaultIcon
+
+      return (
+        <IconButton
+          onClick={marksConfig[mark].getOnClick(marksOpenState[mark])}
+        >
+          <Icon />
+        </IconButton>
+      )
+    })}
+  </>
+)
+
 const Note = () => {
   const noteId = useNoteId()
   const note = useNotes(noteId)
@@ -76,38 +116,39 @@ const Note = () => {
   const [editedNote, setNoteData] = useState(note)
   const { photoSrc, marks, text, title } = editedNote
 
+  const [locationOpen, setLocationOpen] = useState(false)
+  const [tagOpen, setTagOpen] = useState(false)
+
+  const marksOpenState = {
+    location: setLocationOpen,
+    tag: setTagOpen,
+  }
+
+  const getOnInput = (prop: keyof Note) => (ev: OnInputEvent) =>
+    setNoteData((note) => ({ ...note, [prop]: ev.target.value }))
+
   return (
     <Card>
+      <LocationDialog open={locationOpen} />
+      <TagDialog open={tagOpen} />
       <Photo photoSrc={photoSrc} />
       <CardContent>
         <Input
           placeholder="Input title... (T)"
           gutterBottom={true}
           value={title}
-          onInput={(ev: OnInputEvent) =>
-            setNoteData((note) => ({ ...note, title: ev.target.value }))
-          }
+          onInput={getOnInput("title")}
           variant="h3"
         />
         <Input
           placeholder="Input text... (T)"
           value={text}
-          onInput={(ev: OnInputEvent) =>
-            setNoteData((note) => ({ ...note, text: ev.target.value }))
-          }
+          onInput={getOnInput("text")}
           variant="body2"
           color="text.secondary"
         />
+        <Marks {...{ marksOpenState, marks }} />
       </CardContent>
-      {Object.entries(marks).map(([mark, value]) => {
-        const Icon = marksConfig[mark].DefaultIcon
-
-        return (
-          <IconButton>
-            <Icon />
-          </IconButton>
-        )
-      })}
       {/* <CardActions>
           <IconButton>
             <MoreVertIcon />

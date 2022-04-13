@@ -15,7 +15,7 @@ import {
   DialogContent,
   TextField,
 } from "@mui/material"
-import { useState } from "react"
+import { useReducer, useState } from "react"
 import objectEquals from "object-equals"
 import { Save } from "@mui/icons-material"
 import { InputFile } from "@the-chat/ui-kit"
@@ -78,11 +78,15 @@ type DialogProps = {
   open: boolean
 }
 
-const LocationDialog = ({ setOpen, open }: DialogProps) => (
+const LocationDialog = ({
+  onInput,
+  setOpen,
+  open,
+}: { onInput: (ev: OnInputEvent) => void } & DialogProps) => (
   <Dialog onClose={() => setOpen(false)} open={open}>
     <DialogTitle>{marksConfig.location.text}</DialogTitle>
     <DialogContent>
-      <TextField />
+      <TextField onInput={onInput} />
     </DialogContent>
   </Dialog>
 )
@@ -119,7 +123,14 @@ const Note = () => {
   const noteId = useNoteId()
   const note = useNotes(noteId)
 
-  const [editedNote, setNoteData] = useState(note)
+  const [editedNote, setNoteData] = useReducer(
+    (state, updates) => ({
+      ...state,
+      ...updates,
+    }),
+    note
+  )
+  // const [editedNote, setNoteData] = useState(note)
   const { photoSrc, marks, text, title } = editedNote
 
   const [locationOpen, setLocationOpen] = useState(false)
@@ -130,12 +141,21 @@ const Note = () => {
     tag: setTagOpen,
   }
 
-  const getOnInput = (prop: keyof Note) => (ev: OnInputEvent) =>
-    setNoteData((note) => ({ ...note, [prop]: ev.target.value }))
+  const getOnInput = (prop: string) => (ev: OnInputEvent) =>
+    setNoteData({ [prop]: ev.target.value })
+
+  const locationOnInput = (ev: OnInputEvent) =>
+    setNoteData({
+      marks: { ...marks, location: ev.target.value },
+    })
 
   return (
     <Card>
-      <LocationDialog setOpen={setLocationOpen} open={locationOpen} />
+      <LocationDialog
+        onInput={locationOnInput}
+        setOpen={setLocationOpen}
+        open={locationOpen}
+      />
       <TagDialog setOpen={setTagOpen} open={tagOpen} />
       <Photo photoSrc={photoSrc} />
       <CardContent>

@@ -1,11 +1,13 @@
+export type Marks = "location" | "tag"
+
 type Id = {
   id: string
 }
 
-type Marks = {
-  marks: Partial<Record<"location" | "tag", string>>
+type MarksInNote = {
+  marks: Partial<Record<Marks, string>>
 }
 
 type Info = Partial<Record<"title" | "text" | "photoSrc", string>>
 
-export type Note = Id & Marks & Info
+export type Note = Id & MarksInNote & Info

@@ -16,6 +16,7 @@ const NewNote = () => {
     const handleNew = () => {
       const newBlankNote: Note = {
         text: "",
+        marks: {},
         id: v4(),
       }
 

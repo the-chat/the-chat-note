@@ -73,8 +73,13 @@ const Photo = ({ photoSrc }) =>
     </InputFile>
   ) : null
 
-const LocationDialog = ({ open }: { open: boolean }) => (
-  <Dialog open={open}>
+type DialogProps = {
+  setOpen: SetState<boolean>
+  open: boolean
+}
+
+const LocationDialog = ({ setOpen, open }: DialogProps) => (
+  <Dialog onClose={() => setOpen(false)} open={open}>
     <DialogTitle>{marksConfig.location.text}</DialogTitle>
     <DialogContent>
       <TextField />
@@ -82,8 +87,8 @@ const LocationDialog = ({ open }: { open: boolean }) => (
   </Dialog>
 )
 
-const TagDialog = ({ open }: { open: boolean }) => (
-  <Dialog open={open}>
+const TagDialog = ({ setOpen, open }: DialogProps) => (
+  <Dialog onClose={() => setOpen(false)} open={open}>
     <DialogTitle>{marksConfig.tag.text}</DialogTitle>
   </Dialog>
 )
@@ -100,6 +105,7 @@ const Marks = ({ marksOpenState, marks }: MarksProps) => (
 
       return (
         <IconButton
+          key={mark}
           onClick={marksConfig[mark].getOnClick(marksOpenState[mark])}
         >
           <Icon />
@@ -129,8 +135,8 @@ const Note = () => {
 
   return (
     <Card>
-      <LocationDialog open={locationOpen} />
-      <TagDialog open={tagOpen} />
+      <LocationDialog setOpen={setLocationOpen} open={locationOpen} />
+      <TagDialog setOpen={setTagOpen} open={tagOpen} />
       <Photo photoSrc={photoSrc} />
       <CardContent>
         <Input
